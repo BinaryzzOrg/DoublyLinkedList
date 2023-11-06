@@ -56,11 +56,13 @@ public class Main {
 			break;
 		}
 		case 3: {// insert
-
+			// calls insert method
+			linkList.insert();
 			break;
 		}
 		case 4: {// display unique
-
+			// call display unique method
+			linkList.listThatIsNotDuplicate();
 			break;
 		}
 		case 5: {// exit
@@ -76,4 +78,5 @@ public class Main {
 		// call the menu again passing the same linkList object
 		DisplayMenu(linkList);
 	}// end method
+
 }// end class
