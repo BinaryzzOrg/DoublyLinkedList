@@ -159,12 +159,12 @@ public class DoublyLinkedList {
 	// delete
 	void delete() {
 
-		int position = GetUserInput(1);
-
 		if (!isThisNodeAvailable(head)) {
-			System.out.println("No list yet!");
+			System.out.println(GetErrorMsg(1));
 			return;
 		} // end if
+
+		int position = GetUserInput(1);
 
 		if (position > getLength() || position < 1) {
 			System.out.print("Invalid position");
@@ -210,6 +210,11 @@ public class DoublyLinkedList {
 	// insert
 	void insert() {
 
+		if (!isThisNodeAvailable(head)) {
+			System.out.println(GetErrorMsg(1));
+			return;
+		} // end if
+
 		int data = GetUserInput(3);
 		int position = GetUserInput(4);
 
@@ -252,6 +257,12 @@ public class DoublyLinkedList {
 
 	// display unique
 	void listThatIsNotDuplicate() {
+
+		if (!isThisNodeAvailable(head)) {
+			System.out.println(GetErrorMsg(1));
+			return;
+		} // end if
+
 		// boolean var to find the duplicate
 		boolean foundDuplicateItem;
 		System.out.println("\nList Without Duplicates: ");
