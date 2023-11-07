@@ -181,7 +181,6 @@ public class DoublyLinkedList {
 		int count = 1;
 		while (count < position - 1) {
 			pointerNode = pointerNode.getNext();
-			System.out.print(pointerNode.getData());
 			count++;
 		} // end while
 

@@ -28,7 +28,7 @@ public class Node {
 	}// end method
 
 	Node getPrev() {
-		return this.next;
+		return this.prev;
 	}// end method
 
 	void setPrev(Node prev) {
