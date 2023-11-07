@@ -37,22 +37,7 @@ public class Main {
 			break;
 		}
 		case 2: {// delete
-
-			// check if head is available
-			if (!linkList.isThisNodeAvailable(linkList.getHead())) {
-
-				// call errorMsg array of index 3
-				System.out.println(linkList.GetErrorMsg(3));
-			} else {
-
-				// if head is available, call promtMsg array of index 1
-				System.out.print(linkList.GetPromptMsg(1));
-				sc = new Scanner(System.in);
-				// get the position to delete
-				int position = sc.nextInt();
-				// call delete method and pass in the position
-				linkList.delete(position);
-			} // end if
+			linkList.delete();
 			break;
 		}
 		case 3: {// insert

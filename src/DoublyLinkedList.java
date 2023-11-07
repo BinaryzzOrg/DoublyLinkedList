@@ -18,8 +18,8 @@ public class DoublyLinkedList {
 	String[] promptMsg = {"\nEnter a number: ",//0
 						"\nEnter the position of the element to be deleted: ",//1
 						"\nEnter the value to be removed: ",//2
-						"\nEnter the value to be inserted",//3
-						"\nEnter the position you want to insert:"};//4
+						"\nEnter the value to be inserted: ",//3
+						"\nEnter the position you want to insert: "};//4
 	
 	String[] confirmationMsg = {"The new element has been added successfully!",//0
 						"\nThe current elements are: ",//1
@@ -31,7 +31,7 @@ public class DoublyLinkedList {
 						"\n {Invalid Position!!}",//2
 						"\n {You don't have a list yet!!}",//3	
 						"\n {Value not found!!}",//4
-						"\n {Invalid position. Valid positions are from 1 to }"};//5
+						"\n {Invalid position. Valid positions are from 1 to "};//5
 	//@formatter:on
 
 	String GetPromptMsg(int index) {
@@ -60,7 +60,7 @@ public class DoublyLinkedList {
 	}// end method
 
 	// overload
-	int GetUserInput() {
+	int GetUserInput() {// for menu only
 
 		sc = new Scanner(System.in);
 
@@ -140,7 +140,7 @@ public class DoublyLinkedList {
 	// display
 	void display(int confirmationMsgIndex) {
 		// check if the head has value
-		if (head == null) {
+		if (!isThisNodeAvailable(head)) {
 			System.out.println(GetErrorMsg(1));
 			return;
 		} // end if
@@ -157,46 +157,66 @@ public class DoublyLinkedList {
 	}// end method
 
 	// delete
-	void delete(int position) {
+	void delete() {
 
-		if (position < 1 || position > numElements) {
-			System.out.println(GetErrorMsg(2));
-			Main.DisplayMenu(Main.linkList);
-			delete(sc.nextInt());
+		int position = GetUserInput(1);
 
-		} else if (position == 1) {
-			head = head.getNext();
-
-		} else {
-			Node prev = head;
-			int count = 1;
-			while (count < position - 1) {
-				prev = prev.getNext();
-				count++;
-			} // end while
-
-			Node current = prev.getNext();
-			prev.setNext(current.getNext());
-			if (position == numElements) {
-				tail = prev;
-			} // end if
-			numElements--;
+		if (!isThisNodeAvailable(head)) {
+			System.out.println("No list yet!");
+			return;
 		} // end if
+
+		if (position > getLength() || position < 1) {
+			System.out.print("Invalid position");
+			return;
+		} // end if
+
+		Node pointerNode = head;
+		if (position == 1) {
+			head = pointerNode.getNext();
+//			head.setPrev(null);
+			return;
+		} // end if
+
+		int count = 1;
+		while (count < position - 1) {
+			pointerNode = pointerNode.getNext();
+			System.out.print(pointerNode.getData());
+			count++;
+		} // end while
+
+		if (count + 1 == getLength()) {
+			pointerNode.setNext(null);
+			tail = pointerNode;
+		} else {
+			Node afterNode = pointerNode.getNext();
+			pointerNode.setNext(afterNode.getNext());
+			pointerNode.getNext().setPrev(pointerNode);
+		} // end if else
+
+		display(2);
+	} // end method
+
+	int getLength() {
+		int counter = 0;
+		Node currentNode = head;
+		while (currentNode != null) {
+			currentNode = currentNode.getNext();
+			counter++;
+		} // end while
+		return counter;
 	}// end method
 
 	// insert
 	void insert() {
 
-		System.out.print(GetPromptMsg(3));
-		int data = GetUserInput();
-
-		System.out.print(GetPromptMsg(4));
-		int position = GetUserInput();
+		int data = GetUserInput(3);
+		int position = GetUserInput(4);
 
 		int listSize = count();
 
 		if (position < 1 || position > listSize + 1) {
-			System.out.println(GetErrorMsg(5) + (listSize + 1));
+			System.out.println(GetErrorMsg(5) + (listSize + 1) + "}");
 			return;
 		} // end if
 			// Initialize a pointer to the head of the linked list
@@ -216,6 +236,8 @@ public class DoublyLinkedList {
 		after.setPrev(newNode);
 		current.setNext(newNode);
 		newNode.setPrev(current);
+
+		display(1);
 	}// end method
 
 	int count() {
